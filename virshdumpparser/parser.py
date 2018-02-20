@@ -2,6 +2,7 @@
 
 import xml.etree.ElementTree as ET
 
+
 class VirshXMLParser:
 
     def __init__(self, xmlfile=None):
@@ -17,13 +18,20 @@ class VirshXMLParser:
         else:
             return element.get(attr)
 
-    def get_elements(self, path=None, tag=None, attrib=None, value=None, ns={}, listout=False):
+    def get_elements(
+            self,
+            path=None,
+            tag=None,
+            attrib=None,
+            value=None,
+            ns={},
+            listout=False):
         elements = [self.root]
         search = '.' if not path else path
         if tag:
             search = search + tag
         if attrib and value:
-            search = "%s[@%s='%s']" %(search, attrib, value)
+            search = "%s[@%s='%s']" % (search, attrib, value)
         elements = self.root.findall(search, ns)
         if listout:
             return elements
@@ -37,4 +45,3 @@ class VirshXMLParser:
             return 'None'
         else:
             return element.text
-
