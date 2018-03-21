@@ -40,6 +40,12 @@ def main():
         image = VXMLP.get_attrib('uuid', path='.//', tag='nova:root', ns=ns)
         table_data.append(['Image ID', image])
 
+        vcpupins = VXMLP.get_elements(path='./cputune/', tag='vcpupin', listout=True)
+        pining = '' if vcpupins else 'None'
+        for vcpupin in vcpupins:
+            pining = pining + "vCPU=%s : CPU=%s\n" % (vcpupin.get('vcpu'), vcpupin.get('cpuset'))
+        table_data.append(['CPU Pining', pining])
+
         interfaces = VXMLP.get_elements(
             path='./devices/', tag='interface', listout=True)
         table_data.append(['No of Interfaces', len(interfaces)])
