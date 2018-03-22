@@ -9,25 +9,29 @@ def main():
 
     for xmlfile in sys.argv[1:]:
 
-        # create element tree object
-        #tree = ET.parse(xmlfile)
-        # get root element
-        #root = tree.getroot()
+        # Create obj for VirshXMLParser
         VXMLP = parser.VirshXMLParser(xmlfile)
 
         table_data = []
         table_data.append(['Field', 'Value'])
 
+        # Get name of the instance
         table_data.append(['Name', VXMLP.get_text(tag='name')])
 
+        # Get domain id of the instance
         table_data.append(['Domian Id', VXMLP.get_attrib('id')])
 
+        # Get instance UUID
         table_data.append(['Instance UUID', VXMLP.get_text(tag='uuid')])
 
+        # Creating namespaces for nova
         ns = {'nova': "http://openstack.org/xmlns/libvirt/nova/1.0"}
+
+        # Get instance name with nova namespace
         name = VXMLP.get_text(path='.//', tag='nova:name', ns=ns)
         table_data.append(['Instance Name', name])
 
+        # Get Flavor details using nova namespace
         flavor_name = VXMLP.get_attrib(
             'name', path='.//', tag='nova:flavor', ns=ns)
         flavor_disk = VXMLP.get_text(path='.//', tag='nova:memory', ns=ns)
@@ -37,27 +41,34 @@ def main():
             flavor_name, flavor_memory, flavor_vcpu, flavor_disk)
         table_data.append(['Flavor', flavor])
 
+        # Get image details using nova namespace
         image = VXMLP.get_attrib('uuid', path='.//', tag='nova:root', ns=ns)
         table_data.append(['Image ID', image])
 
-        vcpupins = VXMLP.get_elements(path='./cputune/', tag='vcpupin', listout=True)
+        # Get cpu pinning details of instance
+        vcpupins = VXMLP.get_elements(
+            path='./cputune/', tag='vcpupin', listout=True)
         pining = 'vCPU => CPU' if vcpupins else None
         for vcpupin in vcpupins:
-            pining = pining + "\n  %s  =>  %s" % (vcpupin.get('vcpu'), vcpupin.get('cpuset'))
+            pining = pining + \
+                "\n  %s  =>  %s" % (vcpupin.get('vcpu'), vcpupin.get('cpuset'))
         table_data.append(['CPU Pining', pining])
 
+        # Get hugepage details of instance
         size = VXMLP.get_attrib('size', path='.//', tag='page')
         unit = VXMLP.get_attrib('unit', path='.//', tag='page')
         nodeset = VXMLP.get_attrib('nodeset', path='.//', tag='page')
         hugepages = None
         if size != 'None':
-            hugepages = "Size: %s %s\nNodeset: %s" %(size, unit, nodeset)
+            hugepages = "Size: %s %s\nNodeset: %s" % (size, unit, nodeset)
         table_data.append(['Huge Pages', hugepages])
 
+        # Get total number of interfaces
         interfaces = VXMLP.get_elements(
             path='./devices/', tag='interface', listout=True)
         table_data.append(['No of Interfaces', len(interfaces)])
 
+        # Parse through each interface and get interface details
         InterfaceVXMLP = parser.VirshXMLParser()
         for interface in interfaces:
             InterfaceVXMLP.root = interface
@@ -73,9 +84,11 @@ def main():
                 itype, mac, driver, atype, domain, bus, slot)
             table_data.append([iname, idetails])
 
+        # Get total number of disks
         disks = VXMLP.get_elements(path='./devices/', tag='disk', listout=True)
         table_data.append(['No of Disks', len(disks)])
 
+        # Parse through each disk and get disk details
         DiskVXMLP = parser.VirshXMLParser()
         for disk in disks:
             DiskVXMLP.root = disk
@@ -88,6 +101,7 @@ def main():
             ddetails = "Disk Type: %s\nDriver Type: %s\nDevice Path: %s\nBus: %s\nSerial No: %s" % (
                 dtype, drtype, target, bus, serial)
 
+            # Get source information of each disk
             source = DiskVXMLP.get_elements(tag='source')
             source_attrib = ''
             for attrib in source.keys():
@@ -96,7 +110,7 @@ def main():
 
             table_data.append([dname, ddetails])
 
-        print("\n\nInstance details of file: %s " % (xmlfile))
+        print("\n\nInstance detail for file: %s " % (xmlfile))
         table = AsciiTable(table_data)
         print(table.table)
 
