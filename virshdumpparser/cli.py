@@ -41,10 +41,18 @@ def main():
         table_data.append(['Image ID', image])
 
         vcpupins = VXMLP.get_elements(path='./cputune/', tag='vcpupin', listout=True)
-        pining = '' if vcpupins else 'None'
+        pining = 'vCPU => CPU' if vcpupins else None
         for vcpupin in vcpupins:
-            pining = pining + "vCPU=%s : CPU=%s\n" % (vcpupin.get('vcpu'), vcpupin.get('cpuset'))
+            pining = pining + "\n  %s  =>  %s" % (vcpupin.get('vcpu'), vcpupin.get('cpuset'))
         table_data.append(['CPU Pining', pining])
+
+        size = VXMLP.get_attrib('size', path='.//', tag='page')
+        unit = VXMLP.get_attrib('unit', path='.//', tag='page')
+        nodeset = VXMLP.get_attrib('nodeset', path='.//', tag='page')
+        hugepages = None
+        if size != 'None':
+            hugepages = "Size: %s %s\nNodeset: %s" %(size, unit, nodeset)
+        table_data.append(['Huge Pages', hugepages])
 
         interfaces = VXMLP.get_elements(
             path='./devices/', tag='interface', listout=True)
