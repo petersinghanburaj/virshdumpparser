@@ -10,7 +10,7 @@ This is the implemention on python script to parse the xml file generate by "vir
 Installation Steps
 -------------------
 * Follow the below manual steps to install 'virshdumpparser' tool.
-..
+~~~
 # Clone the repo
 git clone https://github.com/petersinghanburaj/virshdumpparser.git
 
@@ -19,23 +19,23 @@ cd virshdumpparser/
 
 # Install the package
 python setup.py install
-..
+~~~
 
 
 Usage 
 ------
-virshdumpparser instance-01 instance-02
+  virshdumpparser instance-01 instance-02
 
-  or run using wildcard
+or run using wildcard
   
-virshdumpparser instance-*
+  virshdumpparser instance-*
 
 
 Sample Outputs
 ---------------
 
 1. For a normal OpenStack instance.
-..
+~~~
 $ virshdumpparser instance-01 
 
 Instance detail for file: instance-01 
@@ -68,10 +68,10 @@ Instance detail for file: instance-01
 |                               |    file: /var/lib/nova/instances/3b7c062f-e049-4d0b-8800-a878a53f1923/disk |
 |                               |                                                                            |
 +-------------------------------+----------------------------------------------------------------------------+
-..
+~~~
 
 2. For a OpenStack instance with CPU Pinning and CEPH backend.
-..
+~~~
 $ virshdumpparser instance-04-ceph-cpupinning 
 
 Instance detail for file: instance-04-ceph-cpupinning 
@@ -110,10 +110,10 @@ Instance detail for file: instance-04-ceph-cpupinning
 |                               |    name: vms/26dfc33a-f8fc-4043-8816-5daf8a2dc160_disk |
 |                               |                                                        |
 +-------------------------------+--------------------------------------------------------+
-..
+~~~
 
 3. For a OpenStack instance with DPDK and SR-IOV.
-..
+~~~
 $ virshdumpparser instance-05-dpdk instance-06-sriov
 
 Instance detail for file: instance-05-dpdk 
@@ -182,4 +182,4 @@ Instance detail for file: instance-06-sriov
 |                               |    name: vms/803949f8-0b32-4577-bb01-d5f50d343fef_disk |
 |                               |                                                        |
 +-------------------------------+--------------------------------------------------------+
-..
+~~~
