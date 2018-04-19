@@ -7,14 +7,8 @@ setup(name='virshdumpparser',
       author='Petersingh Anburaj',
       author_email='panburaj@redhat.com',
       packages=['virshdumpparser'],
-      install_requires=[
-          'terminaltables'
-      ],
+      install_requires=['terminaltables'],
       platforms=['Linux'],
       package_dir={'virshdumpparser': 'virshdumpparser'},
-      entry_points={
-          'console_scripts': [
-              'virshdumpparser=virshdumpparser.cli:main',
-          ],
-      },
-)
+      entry_points={'console_scripts': ['virshdumpparser=virshdumpparser.cli:main']}
+      )
