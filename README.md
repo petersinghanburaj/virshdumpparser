@@ -1,3 +1,10 @@
+[![License](https://img.shields.io/github/license/petersinghanburaj/virshdumpparser.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/petersinghanburaj/virshdumpparser.svg?branch=master)](https://travis-ci.org/petersinghanburaj/virshdumpparser)
+[![Coverage Status](https://coveralls.io/repos/github/petersinghanburaj/virshdumpparser/badge.svg?branch=master)](https://coveralls.io/github/petersinghanburaj/virshdumpparser?branch=master)
+[![Release status](https://img.shields.io/github/release/petersinghanburaj/virshdumpparser.svg)](https://github.com/petersinghanburaj/virshdumpparser/releases)
+[![PyPI version](https://badge.fury.io/py/virshdumpparser.svg)](https://badge.fury.io/py/virshdumpparser)
+
+
 
 # virshdumpparser
 
