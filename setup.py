@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='virshdumpparser',
-      version='0.1',
+      version='0.2',
       description='Parser to parse the virsh dump xml files',
       url='https://github.com/petersinghanburaj/virshdumpparser',
       author='Petersingh Anburaj',
